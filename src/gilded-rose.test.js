@@ -1,5 +1,8 @@
 const Shop = require('./shop');
 const Item = require('./item');
+const AgedBrie = require('./aged-brie');
+const Sulfuras = require('./sulfuras');
+const BackstagePass = require('./backstage-pass');
 
 let shop;
 
@@ -40,7 +43,7 @@ test('Even outdated items could not have negative quality', () => {
 });
 
 test('Aged brie increases in quality the older it gets', () => {
-  shop.items.push(new Item('Aged Brie', 2, 2));
+  shop.items.push(new AgedBrie(2, 2));
 
   shop.updateQuality();
 
@@ -48,7 +51,7 @@ test('Aged brie increases in quality the older it gets', () => {
 });
 
 test('Aged brie quality is never more than 50', () => {
-  shop.items.push(new Item('Aged Brie', 2, 50));
+  shop.items.push(new AgedBrie(2, 50));
 
   shop.updateQuality();
 
@@ -56,16 +59,16 @@ test('Aged brie quality is never more than 50', () => {
 });
 
 test('Sulfuras never ages or decreases in quality', () => {
-  shop.items.push(new Item('Sulfuras, Hand of Ragnaros', 2, 80));
+  shop.items.push(new Sulfuras());
 
   shop.updateQuality();
 
-  expect(shop.items[0]).toEqual({ name: 'Sulfuras, Hand of Ragnaros', sellIn: 2, quality: 80 });
+  expect(shop.items[0]).toEqual({ name: 'Sulfuras, Hand of Ragnaros', sellIn: 80, quality: 80 });
 });
 
 test('Backstage passes quality increases by 1 if there are more than 10 days left', () => {
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 20, 10));
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 11, 10));
+  shop.items.push(new BackstagePass(20, 10));
+  shop.items.push(new BackstagePass(11, 10));
 
   shop.updateQuality();
 
@@ -74,7 +77,7 @@ test('Backstage passes quality increases by 1 if there are more than 10 days lef
 });
 
 test('Backstage passes quality could not be more than 50', () => {
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 20, 50));
+  shop.items.push(new BackstagePass(20, 50));
 
   shop.updateQuality();
 
@@ -82,9 +85,9 @@ test('Backstage passes quality could not be more than 50', () => {
 });
 
 test('Backstage passes quality increases by 2 if there are between 10 and 6 days left', () => {
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 10, 10));
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 9, 10));
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 6, 10));
+  shop.items.push(new BackstagePass(10, 10));
+  shop.items.push(new BackstagePass(9, 10));
+  shop.items.push(new BackstagePass(6, 10));
 
   shop.updateQuality();
 
@@ -94,9 +97,9 @@ test('Backstage passes quality increases by 2 if there are between 10 and 6 days
 });
 
 test('Backstage passes quality increases by 3 if there are less than 6 days left', () => {
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 5, 10));
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 3, 10));
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 1, 10));
+  shop.items.push(new BackstagePass(5, 10));
+  shop.items.push(new BackstagePass(3, 10));
+  shop.items.push(new BackstagePass(1, 10));
 
   shop.updateQuality();
 
@@ -106,7 +109,7 @@ test('Backstage passes quality increases by 3 if there are less than 6 days left
 });
 
 test('Backstate passes quality drop to 0 the day after the concert', () => {
-  shop.items.push(new Item('Backstage passes to a TAFKAL80ETC concert', 0, 10));
+  shop.items.push(new BackstagePass(0, 10));
 
   shop.updateQuality();
 
