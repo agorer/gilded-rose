@@ -1,4 +1,4 @@
-const Shop = require('./shop');
+const Shop = require('../shop');
 const BackstagePass = require('./backstage-pass');
 
 let shop;

@@ -1,4 +1,4 @@
-const Shop = require('./shop');
+const Shop = require('../shop');
 const Sulfuras = require('./sulfuras');
 
 let shop;
